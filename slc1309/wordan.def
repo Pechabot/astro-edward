@@ -1,0 +1,269 @@
+/*********************************************************************************
+Licence for Tibw - Tibetan printing software
+
+Copyright (c) 1985-2013 Edward Henning
+
+Permission is hereby granted, free of charge, to any person  obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in the
+Software without restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
+Software, and to permit persons to whom the Software is furnished to do so, subject
+to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies
+or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+************************************************************************************/
+
+char wrd_tst[14];
+char utf8str[40];
+char utf8char[10];
+char wordstr8[4000]; // All UTF-8 output goes here
+char tst_str[1000];  // Test Wylie source string
+
+/*** General globals ***/
+
+int	prf, sup, rot, sub, sub2, vw1, vw2, vw3, suf1, suf2, shd, vm1stp;
+
+/*** These next three may not be needed ***/
+
+char	lng;		    /** Language - 1 = Tib, 2 = Skt **/
+int	sktpt;		    /** Pointer into Skt array if relevent **/
+int	flgs;		    /** Flags for special purposes **/
+int     max_sktstr = 0;   // Maximum characters used
+int	sml_fnt;
+char	sktstr[16];   /*** Working copy of Sanskrit structure ***/
+
+char *chrs[226] = {
+"0",        // 0
+"NOR_K",    // 1
+"NOR_KH",   // 2
+"NOR_G",    // 3
+"NOR_GH",   // 4
+"NOR_NG",   // 5
+"NOR_C",    // 6
+"NOR_CH",   // 7
+"NOR_J",    // 8
+"NOR_NY",   // 9
+"NOR_TR",   // 10
+"NOR_TRH",  // 11
+"NOR_DR",   // 12
+"NOR_DRH",  // 13
+"NOR_NR",   // 14
+"NOR_T",    // 15
+"NOR_TH",   // 16
+"NOR_D",    // 17
+"NOR_DH",   // 18
+"NOR_N",    // 19
+"NOR_P",    // 20
+"NOR_PH",   // 21
+"NOR_B",    // 22
+"NOR_BH",   // 23
+"NOR_M",    // 24
+"NOR_TS",   // 25
+"NOR_TSH",  // 26
+"NOR_DZ",   // 27
+"NOR_DZH",  // 28
+"NOR_W",    // 29
+"NOR_ZH",   // 30
+"NOR_Z",    // 31
+"NOR_A",    // 32
+"NOR_Y",    // 33
+"NOR_R",    // 34
+"NOR_L",    // 35
+"NOR_SH",   // 36
+"SKT_SZH",  // 37
+"NOR_S",    // 38
+"NOR_H",    // 39
+"NOR_SA",   // 40
+"SKT_KZH",  // 41
+"c:42",     // 42
+"SKT_NRY",  // 43
+"SKT_AVA",  // 44
+"SQU_K",    // 45
+"SQU_KH",   // 46
+"SQU_G",    // 47
+"SQU_GH",   // 48
+"SQU_NG",   // 49
+"SQU_C",    // 50
+"SQU_CH",   // 51
+"SQU_J",    // 52
+"SQU_NY",   // 53
+"SQU_TR",   // 54
+"SQU_TRH",  // 55
+"SQU_DR",   // 56
+"SQU_DRH",  // 57
+"SQU_NR",   // 58
+"SQU_T",    // 59
+"SQU_TH",   // 60
+"SQU_D",    // 61
+"SQU_DH",   // 62
+"SQU_N",    // 63
+"SQU_P",    // 64
+"SQU_PH",   // 65
+"SQU_B",    // 66
+"SQU_BH",   // 67
+"SQU_M",    // 68
+"SQU_TS",   // 69
+"SQU_TSH",  // 70
+"SQU_DZ",   // 71
+"SQU_DZH",  // 72
+"SQU_W",    // 73
+"SQU_ZH",   // 74
+"SQU_Z",    // 75
+"SQU_A",    // 76
+"SQU_Y",    // 77
+"SQU_R",    // 78
+"SQU_L",    // 79
+"SQU_SH",   // 80
+"SQU_SZH",  // 81
+"SQU_S",    // 82
+"SQU_H",    // 83
+"SQU_SA",   // 84
+"SQU_KZ",   // 85
+"SQU_HR",   // 86
+"SQU_SHR",  // 87
+"SZHYA",    // 88
+"DRRI",     // 89
+"SKT_TW",   // 90
+"SKT_BHY",  // 91
+"SKT_BHR",  // 92
+"SKT_FO",   // 93
+"SKT_TRR",  // 94
+"RSP_J",    // 95
+"RSP_NY",   // 96
+"RSP_D",    // 97
+"RSP_DR",   // 98
+"SKT_NRR", // 99
+"RSB_K",    // 100
+"RSB_G",    // 101
+"RSB_D",    // 102
+"RSB_N",    // 103
+"RSB_ZH",   // 104
+"RSB_SH",   // 105
+"SLO_TS",   // 106
+"SLO_TSH",  // 107
+"SLO_DZ",   // 108
+"RSS_D",    // 109
+"RSS_P",    // 110
+"SSB_R",    // 111
+"SSB_L",    // 112
+"SUP_SR",   // 113
+"SUP_R",    // 114
+"SUP_L",    // 115
+"SUP_S",    // 116
+"SUB_Y",    // 117
+"SUB_R",    // 118
+"SUB_L",    // 119
+"SUB_A",    // 120
+"SUB_W",    // 121
+"SKT_HR",   // 122
+"SKT_SHR",  // 123
+"SKT_HUM",  // 124
+"SKT_JR",   // 125
+"SKT_TY",   // 126
+"SKT_TR",   // 127
+"SQU_HY",   // 128
+"SKT_HY",   // 129
+"VOW_I",    // 130
+"VOW_IR",   // 131
+"VOW_U",    // 132
+"VOW_E",    // 133
+"VOW_AI",   // 134
+"VOW_O",    // 135
+"VOW_AU",   // 136
+"SKT_H",    // 137
+"NYISH",    // 138
+"c:139",    // 139
+"c:140",    // 140
+"SRTPG_1",  // 141
+"SRTPG_2",  // 142
+"SRTPG_3",  // 143
+"DOT",      // 144
+"SHAD",     // 145
+"ANUSV",    // 146
+"ANUSVZ",   // 147
+"SWIDSH",   // 148
+"CONTSH",   // 149
+"c:150",    // 150
+"SKT_TRW",  // 151
+"SKT_DRY",  // 152
+"SKT_Q",    // 153
+"SKT_QS",   // 154
+"c:155",    // 155
+"c:156",    // 156
+"c:157",    // 157
+"c:158",    // 158
+"c:159",    // 159
+"c:160",    // 160
+"c:161",    // 161
+"c:162",    // 162
+"c:163",    // 163
+"c:164",    // 164
+"c:165",    // 165
+"c:166",    // 166
+"c:167",    // 167
+"c:168",    // 168
+"c:169",    // 169
+"c:170",    // 170
+"c:171",    // 171
+"c:172",    // 172
+"c:173",    // 173
+"c:174",    // 174
+"c:175",    // 175
+"c:176",    // 176
+"c:177",    // 177
+"c:178",    // 178
+"c:179",    // 179
+"c:180",    // 180
+"c:181",    // 181
+"c:182",    // 182
+"c:183",    // 183
+"c:184",    // 184
+"c:185",    // 185
+"c:186",    // 186
+"c:187",    // 187
+"c:188",    // 188
+"c:189",    // 189
+"c:190",    // 190
+"c:191",    // 191
+"c:192",    // 192
+"c:193",    // 193
+"c:194",    // 194
+"c:195",    // 195
+"c:196",    // 196
+"c:197",    // 197
+"c:198",    // 198
+"c:199",    // 199
+"SKT_A",    // 200
+"SKT_I",    // 201
+"SKT_U",    // 202
+"SKT_R",    // 203
+"SKT_LR",   // 204
+"SKT_LI",   // 205
+"SKT_LLI",  // 206
+"c:207",    // 207
+"c:208",    // 208
+"c:209",    // 209
+"c:210",    // 210
+"c:211",    // 211
+"c:212",    // 212
+"c:213",    // 213
+"c:214",    // 214
+"c:215",    // 215
+"c:216",    // 216
+"c:217",    // 217
+"SKT_M",    // 218
+"c:219",    // 219
+"c:220",    // 220
+"c:221",    // 221
+"c:222",    // 222
+"c:223",    // 223
+"c:224",    // 224
+"STOP" };   // 225

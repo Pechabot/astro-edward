@@ -1,0 +1,185 @@
+/*********************************************************************************
+Licence for SLC - Tibetan Calendar software for Sherab Ling
+
+Copyright (c) 2009-2013 Edward Henning
+
+Permission is hereby granted, free of charge, to any person  obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in the
+Software without restriction, including without limitation the rights to use, 
+copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the 
+Software, and to permit persons to whom the Software is furnished to do so, subject 
+to the following conditions: 
+
+The above copyright notice and this permission notice shall be included in all copies
+or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT 
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION 
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+************************************************************************************/
+
+extern int d_bug;
+extern int datchek; // For debugging
+extern int full_print;
+
+extern int     zladag[], zladagN[], tt, tm, ty, nyidor, tmth;
+extern int     zlasho1, zlasho2;
+extern int     gen_mth; // General month number count from Kalacakra epoch
+extern int     ltt, ltm, lty;
+extern int     nyidru[], nyilon[], nyibar[], gzadru[], tsedru[], tsebar[];
+extern int     prv_nyibar[], nxt_nyibar[];
+extern int     sol_cor[6];
+extern int     nyiwor[], nyidag[], rilcha[], gzadag[];
+extern int     nyibarl, tsebarl;
+extern int     nxt_nyidag[], nxt_gzadag[], nxt_monlong[], tt_monlong[6];
+extern int     fst_monlong[], cur_monlong[], scd_monlong[];
+extern int     prv_nyidag[], prv_gzadag[], prv_monlong[]; // Previous lunar day
+extern int     lmx[6], lm1[6], lm2[6];
+extern int     prv_sbyorlong[], fst_sbyorlong[6], sbyorlong[];
+extern int     spz_frac_b, spz_frac_c;
+extern int     nyi_cnt; // Count of days for solar longitude calculation;
+extern int     rahu_mth;
+extern int     rahutsa[], rahudong[], rahudong30[], rahujug[];
+extern int     rahupart; // 230 fraction for Rahu cycle
+extern double rahurealf;
+extern int     zerlst[];
+extern int     cur_mth;   /*** Current month number, full form ***/
+extern int     cur_tsh;   /*** Current Tithi ***/
+extern int     ch_lh[];
+extern int     lst_dy, cur_dy;
+extern int  zeromthfg;  // Flag for zero fractional part in month;
+extern int scndzero;  // New flag for zero fractional part of month.
+extern int     spizag, spizag15, spizag30;
+extern int   juldat;  /** Julian day number **/
+extern int   wd, wm, wy;  /** Western dates **/
+extern int   doweek;      // Day of the week
+extern int   epch_yr, eyr_a, ril_a, ril_b;
+extern int  epch;
+extern int  zlapure;
+extern int  tsurlug;
+extern int  gza_short_flg;
+extern int  gza_f;
+extern int  sun_f;
+
+extern int    lista[], listb[], listc[];
+extern int    monlong[];
+extern int    list1[], list2[], list3[];
+extern int    adj_mth;
+
+// Planet figures
+
+extern int meradd;  // Figures to be added for planets for the
+extern int venadd;  // nyin zhag dal ba. These are days of cycle.
+extern int maradd;
+extern int jupadd;
+extern int satadd;
+extern int mar_gz, jup_gz, sat_gz, mer_gz, ven_gz; // Particular days.
+
+extern int merkanbar[6];
+extern int merkandag[6];
+
+extern int venkanbar[6];
+extern int venkandag[6];
+
+extern int merdaldag[];
+extern int mermurdag[];
+extern int vendaldag[];
+extern int venmurdag[];
+extern int mardaldag[];
+extern int marmurdag[];
+extern int jupdaldag[];
+extern int jupmurdag[];
+extern int satdaldag[];
+extern int satmurdag[];
+
+// Indices for planetary direction:
+
+extern int mer_d;
+extern int ven_d;
+extern int mar_d;
+extern int jup_d;
+extern int sat_d;
+
+extern int ZS_s, ZS_d, ZS_m;  // Zodiac signs, minutes, seconds;
+
+extern char filenam[];
+extern FILE *fptgt, *fptgt1, *fptgt2;
+extern char outbuf[];
+extern int print_on, printinprog;
+extern char printstring[];
+
+extern char tmpstr[];
+extern int phrodx, phrodx2;
+extern int yan_kwong_flg, zin_phung_flg;
+extern int klu_bzlog_flg, klu_thebs_flg, nyi_nag_flg;
+extern int zhallo[];
+extern int byedlo[];
+extern int byedskar[];
+extern int byedkyon[];
+
+extern int cycadd01;
+
+// String variables:
+
+extern char *e_str[];
+
+extern char *dayoweek[];
+extern char *dayoweekT[];
+extern char *lunmanT[];
+extern char *lunmanS[];
+extern char *MnthS[];
+extern char *MnthT[];
+extern int lunmanelem[];
+extern char *lunmonT[]; 
+extern char *fourelemE[];
+extern char *fourelemT[];
+extern int dowkelem[];
+extern char *dga2T[];
+extern char *yogaT[];
+extern char *yogaS[];
+extern char *byedT[];
+extern char *byedS[];
+extern char *cycanim[];
+extern char *cycanimT[];
+extern char *cycelem[];
+extern char *cycelem1[];
+extern char *cycelem1T[];
+extern char *cycgendT[];
+extern char *cycgendE[];
+extern char *cycpar[];
+extern char *cycparT[];
+extern char *cycparE[];
+extern char *cycstems[];
+extern char *cycbranch[];
+extern char *Clunman[];
+// Kongtrul's spellings:
+extern char *ClunmanK[];
+extern char *wmonths[];
+extern char *ZsignsE[];
+extern char *ZsignsT[];
+extern char *byungphrod[];
+extern char *byungphrodE[];
+extern char *phrodchen[];
+extern char *tenbrelT[];
+extern char *plandirT[];
+extern char *plandirE[];
+//extern char *rgyalsogs[];
+//extern char *tseyang[];
+extern char *gzaphrod[];
+//From tcgbk:
+extern char gen_phrod_str[];
+extern char sreg_str[];
+extern char lmchg[];
+extern char lmchgU[];
+extern char lmchgE[];
+extern char byungphro_str[];
+extern char solar_term_str[];
+extern char bishti_str[];
+extern char bishti_str2[];
+extern int sadag_str_len;
+extern char sadag_str[]; // Maximum used has been 141
+extern char sadag_str2[]; // Maximum used has been 35
+extern char namgo_str[];

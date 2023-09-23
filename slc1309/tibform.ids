@@ -1,0 +1,224 @@
+/*********************************************************************************
+Licence for Tibw - Tibetan printing software
+
+Copyright (c) 1985-2013 Edward Henning
+
+Permission is hereby granted, free of charge, to any person  obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in the
+Software without restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
+Software, and to permit persons to whom the Software is furnished to do so, subject
+to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies
+or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+************************************************************************************/
+
+/** NORMAL TIBETAN CHARACTERS **/
+
+#define ID_NOR_K    1                                      // 33
+#define ID_NOR_KH   2                                      // 34
+#define ID_NOR_G    3                                      // 35
+#define ID_NOR_GH   4                                      // 36
+#define ID_NOR_NG   5                                      // 37
+#define ID_NOR_C    6                                      // 38
+#define ID_NOR_CH   7                                      // 39
+#define ID_NOR_J    8                                      // 40
+#define ID_NOR_NY   9                                      // 41
+#define ID_NOR_TR   10                                     // 42
+#define ID_NOR_TRH  11                                     // 43
+#define ID_NOR_DR   12                                     // 44
+#define ID_NOR_DRH  13                                     // 45
+#define ID_NOR_NR   14                                     // 46
+#define ID_NOR_T    15                                     // 47
+#define ID_NOR_TH   16                                     // 48
+#define ID_NOR_D    17                                     // 49
+#define ID_NOR_DH   18                                     // 50
+#define ID_NOR_N    19
+#define ID_NOR_P    20
+#define ID_NOR_PH   21
+#define ID_NOR_B    22
+#define ID_NOR_BH   23
+#define ID_NOR_M    24
+#define ID_NOR_TS   25
+#define ID_NOR_TSH  26
+#define ID_NOR_DZ   27
+#define ID_NOR_DZH  28
+#define ID_NOR_W    29
+#define ID_NOR_V    29
+
+#define ID_NOR_ZH   30
+#define ID_NOR_Z    31
+#define ID_NOR_A    32 /** Long A **/
+#define ID_NOR_Y    33
+#define ID_NOR_R    34
+#define ID_NOR_L    35
+#define ID_NOR_SH   36
+#define ID_SKT_SZH  37     /** S dot under **/  /** Change to NOR **/
+#define ID_NOR_S    38
+#define ID_NOR_H    39
+#define ID_NOR_SA   40  /** Short A **/
+#define ID_SKT_KZH  41
+#define ID_SKT_NRY  43
+#define ID_SKT_AVA  44
+
+/** Main squashed characters **/
+
+#define ID_SQU_K     45
+#define ID_SQU_KH    46
+#define ID_SQU_G     47
+#define ID_SQU_GH    48
+#define ID_SQU_NG    49
+#define ID_SQU_C     50
+#define ID_SQU_CH    51
+#define ID_SQU_J     52
+#define ID_SQU_NY    53
+#define ID_SQU_TR    54
+#define ID_SQU_TRH   55
+#define ID_SQU_DR    56
+#define ID_SQU_DRH   57
+#define ID_SQU_NR    58
+#define ID_SQU_T     59
+#define ID_SQU_TH    60
+#define ID_SQU_D     61
+#define ID_SQU_DH    62
+#define ID_SQU_N     63
+#define ID_SQU_P     64
+#define ID_SQU_PH    65
+#define ID_SQU_B     66
+#define ID_SQU_BH    67
+#define ID_SQU_M     68
+#define ID_SQU_TS    69
+#define ID_SQU_TSH   70
+#define ID_SQU_DZ    71
+#define ID_SQU_DZH   72
+#define ID_SQU_W     73
+#define ID_SQU_ZH    74
+#define ID_SQU_Z     75
+#define ID_SQU_A     76
+#define ID_SQU_Y     77
+#define ID_SQU_R     78
+#define ID_SQU_L     79
+#define ID_SQU_SH    80
+#define ID_SQU_SZH   81
+#define ID_SQU_S     82
+#define ID_SQU_H     83
+#define ID_SQU_SA    84
+#define ID_SQU_KZ    85
+
+#define ID_SQU_HR    86                          // 118
+#define ID_SQU_SHR   87                          // CHARACTER DELETED
+#define ID_SZHYA     88
+#define ID_DRRI      89                          // 121
+#define ID_SKT_TW    90
+#define ID_SKT_BHY   91                          // NOT USED AT ALL
+#define ID_SKT_BHR   92
+#define ID_SKT_FO    93
+#define ID_SKT_TRR   94
+
+#define ID_RSP_J     95      // START SECOND FONT          // 33
+#define ID_RSP_NY    96                                    // 34
+#define ID_RSP_D     97                                    // 35
+#define ID_RSP_DR    98   // New - 2/7/96                  // 36
+#define ID_SKT_NRR   99   // New - 1/9/1996                // 37
+#define ID_RSB_K    100                                    // 38
+#define ID_RSB_G    101                                    // 39
+#define ID_RSB_D    102                                    // 40
+#define ID_RSB_N    103                                    // 41
+#define ID_RSB_ZH   104                                    // 42
+#define ID_RSB_SH   105                                    // 43
+
+#define ID_SLO_TS   106                                    // 44
+#define ID_SLO_TSH  107                                    // 45
+#define ID_SLO_DZ   108                                    // 46
+#define ID_RSS_D    109                                    // 47
+#define ID_RSS_P    110                                    // 48
+#define ID_SSB_R    111                                    // 49
+#define ID_SSB_L    112                                    // 50
+
+#define ID_SUP_SR   113                                    // 51
+#define ID_SUP_R    114                                    // 52
+#define ID_SUP_L    115                                    // 53
+#define ID_SUP_S    116                                    // 54
+
+#define ID_SUB_Y    117                                    // 55
+#define ID_SUB_R    118                                    // 56
+#define ID_SUB_L    119                                    // 57
+#define ID_SUB_A    120                                    // 58
+#define ID_SUB_W    121                                    // 59
+
+#define ID_SKT_HR   122                                    // 60
+#define ID_SKT_SHR  123                                    // 61
+#define ID_SKT_HUM  124                                    // 62
+#define ID_SKT_JR   125                                    // 63
+#define ID_SKT_TY   126                                    // 64
+#define ID_SKT_TR   127                                    // 65
+#define ID_SQU_HY   128                                    // 66
+#define ID_SKT_HY   129                                    // 67
+
+/** VOWELS **/
+
+#define ID_VOW_I    130
+#define ID_VOW_IR   131  /* REV I */
+#define ID_VOW_U    132
+#define ID_VOW_E    133
+#define ID_VOW_AI   134    /** AI **/
+#define ID_VOW_O    135
+#define ID_VOW_AU   136    /** AU **/
+#define ID_SKT_H    137    /** H dot under **/
+#define ID_NYISH    138    /** Nyishad **/
+
+#define ID_SRTPG_1  141
+#define ID_SRTPG_2  142
+#define ID_SRTPG_3  143
+
+#define ID_DOT      144
+#define ID_SHAD     145
+
+#define ID_ANUSV    146
+#define ID_ANUSVZ   147
+#define ID_SWIDSH   148    /** sbrul shad **/
+#define ID_CONTSH   149    /** Continuation shad **/
+
+#define ID_SKT_TRW  151    // In wrong place, really.
+
+#define ID_SKT_DRY  152    // In wrong place, really.
+#define ID_SKT_Q    153    // In wrong place, really.
+#define ID_SKT_QS   154    // In wrong place, really.
+
+/** VOWELS **/
+#define ID_NOR_I     ID_VOW_I
+#define ID_NOR_U     ID_VOW_U
+#define ID_NOR_E     ID_VOW_E
+#define ID_NOR_O     ID_VOW_O
+#define ID_SKT_AU    ID_VOW_AU
+#define ID_SKT_AI    ID_VOW_AI
+
+#define ID_SKT_A     200   /** Long A **/
+#define ID_SKT_I     201   /** Long I **/
+#define ID_SKT_U     202   /** Long U **/
+#define ID_SKT_R     203   /** RI     **/
+#define ID_SKT_LR    204   /** Long RI **/
+#define ID_SKT_LI    205   /** LI     **/
+#define ID_SKT_LLI   206   /** Long LI **/
+#define ID_SKT_M     218   /** M dot under **/
+/**#define ID_SKT_ZH 220 **/   /** S dot under **/
+
+#define ID_STOP      225   /** Full stop **/
+
+#define ID_SKT_GH    ID_NOR_GH
+#define ID_SKT_JH    ID_NOR_JH
+#define ID_SKT_TH    ID_NOR_TH
+#define ID_SKT_DH    ID_NOR_DH
+#define ID_SKT_BH    ID_NOR_BH
+#define ID_SKT_V     ID_NOR_V
+
+#define ID_SQU_V    ID_SQU_W
+#define ID_SUB_H    ID_SQU_H
